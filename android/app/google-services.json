@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1009457907819",
+    "project_id": "stageflutter-39155",
+    "storage_bucket": "stageflutter-39155.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009457907819:android:5febb4129e303fe697c92e",
+        "android_client_info": {
+          "package_name": "com.mycompany.flutterstage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009457907819-ujhpbpei2lqaofoi77pjkdtejhgm7efg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.flutterstage",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "1009457907819-ms0vvg2gcqds615gli36jasvd0q1shcv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTYQQkIRIBJmAuVKZmcPtEkeM0xmrMEEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009457907819-ms0vvg2gcqds615gli36jasvd0q1shcv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1009457907819-hdbrc3lb5o8kd3oj3ronum9ihe62acuc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.flutterstage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
