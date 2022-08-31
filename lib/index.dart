@@ -5,7 +5,6 @@ export 'add_session_s_page/add_session_s_page_widget.dart'
     show AddSessionSPageWidget;
 export 'update_session_s_page/update_session_s_page_widget.dart'
     show UpdateSessionSPageWidget;
-export 'login_page/login_page_widget.dart' show LoginPageWidget;
 export 'languages_page/languages_page_widget.dart' show LanguagesPageWidget;
 export 'sessions_s_page/sessions_s_page_widget.dart' show SessionsSPageWidget;
 export 'formation_detail_page/formation_detail_page_widget.dart'
@@ -52,3 +51,5 @@ export 'add_equipe_to_competition_page/add_equipe_to_competition_page_widget.dar
 export 'update_competition_page/update_competition_page_widget.dart'
     show UpdateCompetitionPageWidget;
 export 'parametres_page/parametres_page_widget.dart' show ParametresPageWidget;
+export 'scan_q_r_page/scan_q_r_page_widget.dart' show ScanQRPageWidget;
+export 'login_page/login_page_widget.dart' show LoginPageWidget;

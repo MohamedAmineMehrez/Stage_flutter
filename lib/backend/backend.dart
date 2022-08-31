@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:built_value/serializer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,11 +9,11 @@ import 'schema/languages_record.dart';
 import 'schema/formateurs_record.dart';
 import 'schema/formations_record.dart';
 import 'schema/session_s_record.dart';
-import 'schema/user_record.dart';
 import 'schema/sessions_record.dart';
 import 'schema/eleve_record.dart';
 import 'schema/equipes_record.dart';
 import 'schema/competitions_record.dart';
+import 'schema/users_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -24,11 +25,11 @@ export 'schema/languages_record.dart';
 export 'schema/formateurs_record.dart';
 export 'schema/formations_record.dart';
 export 'schema/session_s_record.dart';
-export 'schema/user_record.dart';
 export 'schema/sessions_record.dart';
 export 'schema/eleve_record.dart';
 export 'schema/equipes_record.dart';
 export 'schema/competitions_record.dart';
+export 'schema/users_record.dart';
 
 /// Functions to query LanguagesRecords (as a Stream and as a Future).
 Stream<List<LanguagesRecord>> queryLanguagesRecord({
@@ -192,48 +193,6 @@ Future<FFFirestorePage<SessionSRecord>> querySessionSRecordPage({
     queryCollectionPage(
       SessionSRecord.collection,
       SessionSRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query UserRecords (as a Stream and as a Future).
-Stream<List<UserRecord>> queryUserRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      UserRecord.collection,
-      UserRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<UserRecord>> queryUserRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      UserRecord.collection,
-      UserRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<UserRecord>> queryUserRecordPage({
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      UserRecord.collection,
-      UserRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,
@@ -408,6 +367,48 @@ Future<FFFirestorePage<CompetitionsRecord>> queryCompetitionsRecordPage({
       isStream: isStream,
     );
 
+/// Functions to query UsersRecords (as a Stream and as a Future).
+Stream<List<UsersRecord>> queryUsersRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      UsersRecord.collection,
+      UsersRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<UsersRecord>> queryUsersRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      UsersRecord.collection,
+      UsersRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      UsersRecord.collection,
+      UsersRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,
     int limit = -1,
@@ -453,6 +454,14 @@ Future<List<T>> queryCollectionOnce<T>(
       .toList());
 }
 
+extension WhereInExtension on Query {
+  Query whereIn(String field, List? list) => (list?.isEmpty ?? false)
+      //Ensures an empty list is returned for a query with no results
+      //since it is near impossible for list to have the same random double value
+      ? where(field, whereIn: [Random().nextDouble()])
+      : where(field, whereIn: list);
+}
+
 class FFFirestorePage<T> {
   final List<T> data;
   final Stream<List<T>>? dataStream;
@@ -496,4 +505,24 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
   final dataStream = docSnapshotStream?.map(getDocs);
   final nextPageToken = docSnapshot.docs.isEmpty ? null : docSnapshot.docs.last;
   return FFFirestorePage(data, dataStream, nextPageToken);
+}
+
+// Creates a Firestore document representing the logged in user if it doesn't yet exist
+Future maybeCreateUser(User user) async {
+  final userRecord = UsersRecord.collection.doc(user.uid);
+  final userExists = await userRecord.get().then((u) => u.exists);
+  if (userExists) {
+    return;
+  }
+
+  final userData = createUsersRecordData(
+    email: user.email,
+    displayName: user.displayName,
+    photoUrl: user.photoURL,
+    uid: user.uid,
+    phoneNumber: user.phoneNumber,
+    createdTime: getCurrentTimestamp,
+  );
+
+  await userRecord.set(userData);
 }

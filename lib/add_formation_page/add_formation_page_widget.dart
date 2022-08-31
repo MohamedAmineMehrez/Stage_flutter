@@ -55,7 +55,7 @@ class _AddFormationPageWidgetState extends State<AddFormationPageWidget> {
           },
         ),
         title: Text(
-          'Créer un Formateur',
+          'Créer un Formation',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,

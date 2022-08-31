@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../update_eleve_page/update_eleve_page_widget.dart';
+import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -466,6 +467,41 @@ class _EleveDetailPageWidgetState extends State<EleveDetailPageWidget> {
                       ),
                     ),
                   ],
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                  child: StreamBuilder<EleveRecord>(
+                    stream: EleveRecord.getDocument(widget.eleveRef!),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+                      final qRCodeEleveRecord = snapshot.data!;
+                      return Container(
+                        width: 300,
+                        height: 300,
+                        child: custom_widgets.QRCode(
+                          width: 300,
+                          height: 300,
+                          qrSize: 300.0,
+                          qrData:
+                              '${qRCodeEleveRecord.prenom} ${qRCodeEleveRecord.nom}',
+                          qrBackgroundColor:
+                              FlutterFlowTheme.of(context).primaryBtnText,
+                          qrForegroundColor: Colors.black,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

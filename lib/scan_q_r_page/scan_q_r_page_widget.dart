@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../backend/backend.dart';
 import '../competitions_page/competitions_page_widget.dart';
 import '../eleves_page/eleves_page_widget.dart';
 import '../equipes_page/equipes_page_widget.dart';
@@ -9,24 +8,26 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../formateurs_page/formateurs_page_widget.dart';
 import '../formations_page/formations_page_widget.dart';
+import '../languages_page/languages_page_widget.dart';
 import '../login_page/login_page_widget.dart';
 import '../parametres_page/parametres_page_widget.dart';
-import '../scan_q_r_page/scan_q_r_page_widget.dart';
 import '../sessions_page/sessions_page_widget.dart';
 import '../sessions_s_page/sessions_s_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LanguagesPageWidget extends StatefulWidget {
-  const LanguagesPageWidget({Key? key}) : super(key: key);
+class ScanQRPageWidget extends StatefulWidget {
+  const ScanQRPageWidget({Key? key}) : super(key: key);
 
   @override
-  _LanguagesPageWidgetState createState() => _LanguagesPageWidgetState();
+  _ScanQRPageWidgetState createState() => _ScanQRPageWidgetState();
 }
 
-class _LanguagesPageWidgetState extends State<LanguagesPageWidget> {
+class _ScanQRPageWidgetState extends State<ScanQRPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var barcodeValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,8 @@ class _LanguagesPageWidgetState extends State<LanguagesPageWidget> {
           borderRadius: 30,
           borderWidth: 1,
           buttonSize: 60,
-          icon: FaIcon(
-            FontAwesomeIcons.alignJustify,
+          icon: Icon(
+            Icons.dehaze,
             color: Colors.white,
             size: 30,
           ),
@@ -50,7 +51,7 @@ class _LanguagesPageWidgetState extends State<LanguagesPageWidget> {
           },
         ),
         title: Text(
-          'Languages',
+          'QR Code Scanner',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -70,6 +71,7 @@ class _LanguagesPageWidgetState extends State<LanguagesPageWidget> {
             SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
                     'Bienvenu ',
@@ -88,7 +90,7 @@ class _LanguagesPageWidgetState extends State<LanguagesPageWidget> {
                       shape: BoxShape.circle,
                     ),
                     child: Image.network(
-                      'https://picsum.photos/seed/697/600',
+                      'https://picsum.photos/seed/793/600',
                     ),
                   ),
                   Padding(
@@ -476,52 +478,45 @@ class _LanguagesPageWidgetState extends State<LanguagesPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              StreamBuilder<List<LanguagesRecord>>(
-                stream: queryLanguagesRecord(),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                      ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(85, 250, 0, 0),
+                child: Text(
+                  valueOrDefault<String>(
+                    barcodeValue,
+                    'Not Scanned yet',
+                  ),
+                  style: FlutterFlowTheme.of(context).subtitle1,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(100, 0, 0, 0),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    barcodeValue = await FlutterBarcodeScanner.scanBarcode(
+                      '#C62828', // scanning line color
+                      'Cancel', // cancel button text
+                      true, // whether to show the flash icon
+                      ScanMode.QR,
                     );
-                  }
-                  List<LanguagesRecord> listViewLanguagesRecordList =
-                      snapshot.data!;
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: listViewLanguagesRecordList.length,
-                    itemBuilder: (context, listViewIndex) {
-                      final listViewLanguagesRecord =
-                          listViewLanguagesRecordList[listViewIndex];
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            listViewLanguagesRecord.libelle!,
-                            textAlign: TextAlign.center,
-                            style:
-                                FlutterFlowTheme.of(context).subtitle1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+
+                    setState(() {});
+                  },
+                  text: 'Scan QR Code',
+                  options: FFButtonOptions(
+                    width: 200,
+                    height: 80,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                        ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               ),
             ],
           ),

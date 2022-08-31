@@ -15,7 +15,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(LanguagesRecord.serializer)
       ..add(SessionSRecord.serializer)
       ..add(SessionsRecord.serializer)
-      ..add(UserRecord.serializer)
+      ..add(UsersRecord.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType(

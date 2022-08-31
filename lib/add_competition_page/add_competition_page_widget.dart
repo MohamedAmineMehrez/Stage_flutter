@@ -205,8 +205,8 @@ class _AddCompetitionPageWidgetState extends State<AddCompetitionPageWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: StreamBuilder<List<FormateursRecord>>(
                     stream: queryFormateursRecord(
-                      queryBuilder: (formateursRecord) => formateursRecord
-                          .where('nom', whereIn: choiceChipsValues),
+                      queryBuilder: (formateursRecord) =>
+                          formateursRecord.whereIn('nom', choiceChipsValues),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.

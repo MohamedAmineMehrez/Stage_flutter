@@ -188,7 +188,7 @@ class _UpdateEquipePageWidgetState extends State<UpdateEquipePageWidget> {
                   child: StreamBuilder<List<EleveRecord>>(
                     stream: queryEleveRecord(
                       queryBuilder: (eleveRecord) =>
-                          eleveRecord.where('nom', whereIn: choiceChipsValues),
+                          eleveRecord.whereIn('nom', choiceChipsValues),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.

@@ -266,7 +266,7 @@ class _UpdateCompetitionPageWidgetState
                       child: StreamBuilder<List<FormateursRecord>>(
                         stream: queryFormateursRecord(
                           queryBuilder: (formateursRecord) => formateursRecord
-                              .where('nom', whereIn: choiceChipsValues),
+                              .whereIn('nom', choiceChipsValues),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.

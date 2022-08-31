@@ -36,7 +36,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         child: Visibility(
           visible: responsiveVisibility(
             context: context,
-            tabletLandscape: false,
+            tablet: false,
           ),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
@@ -46,14 +46,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(150, 0, 0, 0),
-                      child: Image.asset(
-                        'assets/images/logoTranslation@3x.png',
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
-                      ),
+                    Image.asset(
+                      'assets/images/logoTranslation@3x.png',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
                     ),
                   ],
                 ),
@@ -69,10 +66,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ),
                         alignment: AlignmentDirectional(-1, 0),
                         child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(130, 0, 16, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
                           child: Text(
-                            'Sign In',
+                            'Log IN',
                             style: FlutterFlowTheme.of(context).title1,
                           ),
                         ),
@@ -199,44 +195,47 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(80, 20, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FFButtonWidget(
-                        onPressed: () async {
-                          final user = await signInWithEmail(
-                            context,
-                            emailTextController!.text,
-                            passwordTextController!.text,
-                          );
-                          if (user == null) {
-                            return;
-                          }
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 900, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            final user = await signInWithEmail(
+                              context,
+                              emailTextController!.text,
+                              passwordTextController!.text,
+                            );
+                            if (user == null) {
+                              return;
+                            }
 
-                          await Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ElevesPageWidget(),
+                            await Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ElevesPageWidget(),
+                              ),
+                              (r) => false,
+                            );
+                          },
+                          text: 'Login',
+                          options: FFButtonOptions(
+                            width: 150,
+                            height: 50,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle1.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                            elevation: 3,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
                             ),
-                            (r) => false,
-                          );
-                        },
-                        text: 'Login',
-                        options: FFButtonOptions(
-                          width: 150,
-                          height: 50,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle1.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                          elevation: 3,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
                           ),
                         ),
                       ),

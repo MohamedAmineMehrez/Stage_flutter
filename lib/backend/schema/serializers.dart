@@ -4,11 +4,11 @@ import 'languages_record.dart';
 import 'formateurs_record.dart';
 import 'formations_record.dart';
 import 'session_s_record.dart';
-import 'user_record.dart';
 import 'sessions_record.dart';
 import 'eleve_record.dart';
 import 'equipes_record.dart';
 import 'competitions_record.dart';
+import 'users_record.dart';
 
 import 'index.dart';
 
@@ -23,11 +23,11 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   FormateursRecord,
   FormationsRecord,
   SessionSRecord,
-  UserRecord,
   SessionsRecord,
   EleveRecord,
   EquipesRecord,
   CompetitionsRecord,
+  UsersRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

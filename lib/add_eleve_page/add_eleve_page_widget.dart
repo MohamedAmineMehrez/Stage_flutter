@@ -303,7 +303,7 @@ class _AddElevePageWidgetState extends State<AddElevePageWidget> {
                   child: StreamBuilder<List<FormationsRecord>>(
                     stream: queryFormationsRecord(
                       queryBuilder: (formationsRecord) => formationsRecord
-                          .where('libelle', whereIn: choiceChipsValues),
+                          .whereIn('libelle', choiceChipsValues),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.

@@ -13,6 +13,7 @@ import '../formations_page/formations_page_widget.dart';
 import '../languages_page/languages_page_widget.dart';
 import '../login_page/login_page_widget.dart';
 import '../parametres_page/parametres_page_widget.dart';
+import '../scan_q_r_page/scan_q_r_page_widget.dart';
 import '../sessions_page/sessions_page_widget.dart';
 import '../sessions_s_page/sessions_s_page_widget.dart';
 import 'package:flutter/material.dart';
@@ -348,6 +349,39 @@ class _CompetitionsPageWidgetState extends State<CompetitionsPageWidget> {
                   text: 'Languages',
                   icon: Icon(
                     Icons.menu_book_rounded,
+                    size: 15,
+                  ),
+                  options: FFButtonOptions(
+                    width: 500,
+                    height: 65,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(200),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ScanQRPageWidget(),
+                      ),
+                    );
+                  },
+                  text: 'Scan QR Code',
+                  icon: Icon(
+                    Icons.qr_code_scanner_rounded,
                     size: 15,
                   ),
                   options: FFButtonOptions(
